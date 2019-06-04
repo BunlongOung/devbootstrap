@@ -1,6 +1,5 @@
 import React from 'react'
 import {View, StyleSheet, TouchableOpacity, Text,TextInput,StatusBar,KeyboardAvoidingView} from 'react-native'
-import { whileStatement } from '@babel/types';
 export default class HomeScreen extends React.Component {
     render(){
         return (
