@@ -1,17 +1,19 @@
 import React from 'react'
-import {View, StyleSheet, TouchableOpacity, Text,TextInput,StatusBar} from 'react-native'
+import {View, StyleSheet, TouchableOpacity, Text,TextInput,StatusBar,KeyboardAvoidingView} from 'react-native'
 import { whileStatement } from '@babel/types';
 export default class HomeScreen extends React.Component {
     render(){
         return (
             <View style={styles.container}>
-                <StatusBar backgroundColor="white" barStyle="light-content" />
+                <StatusBar barStyle="light-content" />
                 <View style={styles.row}>
                     <Text style={styles.facebook}>Facebook</Text>
                     <TextInput style={styles.text} placeholder="Username" />
-                    <TextInput style={styles.text} placeholder="Password" />
+                    <TextInput style={styles.text} secureTextEntry={true} placeholder="Password" />
                     <TouchableOpacity>
-                        <Text style={styles.button}>Login</Text>
+                        <View style={styles.button}>
+                          <Text style={styles.login}>Login</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -29,7 +31,6 @@ const styles =StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-
         backgroundColor: 'white',
         marginTop: 40,
         borderColor: 'black',
@@ -42,7 +43,8 @@ const styles =StyleSheet.create({
     facebook: {
         color: 'white',
         fontSize: 40,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textAlign: 'center'
     },
     button: {
         alignItems: 'center',
@@ -50,13 +52,16 @@ const styles =StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: 'white',
-        color: 'white',
         padding: 10,
-        marginTop: 20,
+        marginTop: 40,
         width: 300,
         height:50,
-        fontSize:20,
         borderRadius: 5,
-        textAlign: 'center', 
+      },
+    login: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: 'white',
+        fontWeight: 'bold'
       }
 })
