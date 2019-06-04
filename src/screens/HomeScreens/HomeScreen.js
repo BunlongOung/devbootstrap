@@ -1,19 +1,69 @@
 import React, { Component } from 'react'
-import { View, TextInput,Text,StyleSheet,TouchableOpacity,StatusBar} from 'react-native'
-
+import { View, TextInput,Text,StyleSheet,TouchableOpacity,StatusBar,ActivityIndicator} from 'react-native'
+import axios from 'axios'
 class HomeScreen extends Component {
+  
+  state = {
+    email :"",
+    password :"",
+    loading:false
+  }
+  SaveData = () => {
+    const{email ,password}= this.state
+    if(!email.includes('@' ))
+    {
+     alert('Email must be have @ ' )
+    }
+    if(!email.includes('.'))
+    {
+     alert('Email must be have . ' )
+    }
+   if(password.length < 6){
+     alert('Password must be more then 6 charater')
+   }  
+   this.setState({loading:true})
+   const uriOscarhq ="http://demo.oscarhq-test.com/api/v1/auth/sign_in"
+   const dataOscarhq ={email,password}
+   axios.post(uriOscarhq,dataOscarhq)
+  .then(response => {
+    alert('login success');
+    this.setState({loading:false})
+  })
+  .catch(error =>{
+    alert(' login error')
+    this.setState({loading:false})
+  });
+  return
+  }
+
+  
   render() {
     return (
        <View style = {styles.container}>
           <StatusBar  barStyle="light-content"/>
           <Text style={styles.text}>Facebook</Text>
 
-          <TextInput style={styles.input} placeholder = "Email"/>
+          <TextInput 
+            style={styles.input} 
+            placeholder = "Email"
+            textContentType="emailAddress"
+            autoCapitalize="none"
+            onChangeText={text => this.setState({ email: text})}
+            />
 
-          <TextInput style={styles.input} placeholder = "Password"/>
-          <TouchableOpacity>
+          <TextInput 
+             style={styles.input} 
+             placeholder = "Password" 
+             secureTextEntry={true}
+             autoCapitalize="none"
+             onChangeText={text => this.setState({ password: text})}
+
+          />
+          <TouchableOpacity onPress={this.SaveData}>
             <View style={styles.controll_button}>
-              <Text style={styles.text_button}>Login</Text>
+            
+            {this.state.loading?<ActivityIndicator size="large" color="red"/> : <Text style={styles.text_button}>Login</Text>}
+              
             </View>
           </TouchableOpacity>
        </View>
