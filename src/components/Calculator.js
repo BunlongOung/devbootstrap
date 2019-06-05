@@ -11,11 +11,11 @@ export default class Calculator extends Component {
     const { text } = this.state
     let newText = text
     if (text === "0") {
-      newText = newText.substr(0, newText.length-1)
+      newText = newText.substr(0, newText.length - 1)
       newText += value
     }
     else if (value === 'c') {
-      newText = newText.substr(0, newText.length-1)
+      newText = newText.substr(0, newText.length - 1)
     } else if (value === '.') {
       if (!newText.includes(".")) {
         newText += value
@@ -31,7 +31,7 @@ export default class Calculator extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.display}>
-          <Text style={styles.displayText}>{ this.state.text }</Text>
+          <Text style={styles.displayText}>{this.state.text}</Text>
         </View>
         <View style={styles.control}>
           <View style={styles.row}>
