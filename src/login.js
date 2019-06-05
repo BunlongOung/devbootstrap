@@ -39,8 +39,8 @@ import axios from 'axios'
             secureTextEntry={true}
             onChangeText={(password) => this.setState({password})}
           />    
-          <TouchableOpacity onPress={() => this.login()}>
-          {/* <TouchableOpacity onPress={this.login}> */}
+          <TouchableOpacity onPress={this.login}>
+          {/* <TouchableOpacity onPress={() => this.login}> */}
              {/* <TouchableOpacity onPress={this.login()}> */}
             <View style={{backgroundColor:'#fff', width:350}}>
               <Text style={{padding:15,textAlign:'center'}}>Log In</Text>
