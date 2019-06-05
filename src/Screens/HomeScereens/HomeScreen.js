@@ -1,12 +1,14 @@
 import React from 'react'
 import { View, StyleSheet, TouchableOpacity, Text, TextInput, StatusBar, ActivityIndicator } from 'react-native'
 import axios from 'axios'
+
 export default class HomeScreen extends React.Component {
   state = {
     email: "",
     password: "",
-    reload: false
+    loading: false
   }
+
   onLogin = () => {
     const { email, password } = this.state
     if (password.length < 6) {
@@ -16,20 +18,19 @@ export default class HomeScreen extends React.Component {
       alert("You need to complete by add '@' or '.' ")
       return 
     }
-    this.setState({ reload: true })
+    this.setState({ loading: true })
 
-    const api = 'http://demo.oscarhq-test.com/api/v1/auth/sign_in'
-    const enperdentai = { email, password }
-    axios.post(api, enperdentai)
+    const endpoint = 'http://demo.oscarhq-test.com/api/v1/auth/sign_in'
+    const credentail = { email, password }
+    axios.post(endpoint, credentail)
       .then(response => {
         alert("Sucessed");
-        this.setState({ reload: false })
+        this.setState({ loading: false })
       })
       .catch(error => {
         alert("Cannot login");
-        this.setState({ reload: false })
+        this.setState({ loading: false })
       });
-    return
   }
   render() {
     return (
@@ -53,7 +54,8 @@ export default class HomeScreen extends React.Component {
           <TouchableOpacity onPress={this.onLogin}>
             <View style={styles.button}>
               {
-                this.state.reload ? <ActivityIndicator />
+                this.state.loading
+                  ? <ActivityIndicator />
                   : <Text style={styles.login} >Login</Text>
               }
             </View>
