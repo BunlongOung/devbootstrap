@@ -11,15 +11,15 @@ import axios from 'axios'
       const {email,password} = this.state
       const endPiont = "http://demo.oscarhq-test.com/api/v1/auth/sign_in"
       const inputedData = {email,password}
-        axios.post(endPiont,inputedData)
-          .then(response => {
-          alert('login success');
-          })
-          .catch(error =>{
-          alert('error')  
-          });
-          return
-        }        
+      axios.post(endPiont,inputedData)
+        .then(response => {
+        alert('login success');
+        })
+        .catch(error =>{
+        alert('error')  
+        });
+        return
+    }   
 
     render() {
       return (
@@ -30,14 +30,14 @@ import axios from 'axios'
             style={styles.input}
             placeholder='Email'
             autoCapitalize="none"
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={(email) => this.setState({email})}
           />
           <TextInput 
             style={styles.input}
             placeholder='Password'  
             autoCapitalize="none"
             secureTextEntry={true}
-            onChangeText={(text) => this.setState({text})}
+            onChangeText={(password) => this.setState({password})}
           />    
           <TouchableOpacity onPress={() => this.login()}>
           {/* <TouchableOpacity onPress={this.login}> */}
