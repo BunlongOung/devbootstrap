@@ -7,9 +7,11 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ActivityIndicator
-}from 'react-native'
+} from 'react-native'
 
-export default class Login extends Component{
+import axios from 'axios'
+
+export default class Login extends Component {
   state={
     email: "",
     password: "",
@@ -17,9 +19,9 @@ export default class Login extends Component{
   }
 
   onLogin = () => {
-    const {email,password} = this.state
+    const { email, password } = this.state
 
-    if (password.length<6){
+    if (password.length < 6){
       alert("Password must be at least 6 Character")
       return
     }
@@ -27,13 +29,13 @@ export default class Login extends Component{
     const endpoint = 'http://demo.oscarhq-test.com/api/v1/auth/sign_in'
     const credentail = { email, password }
 
-    axios.post(endPoint, credentail)
-    .then(response => {
-      alert('Success')
-    })
-    .catch(error => {
-      alert('Invalid Log In')
-    })
+    axios.post(endpoint, credentail)
+      .then(response => {
+        alert('Success')
+      })
+      .catch(error => {
+        alert('Invalid Log In')
+      })
   }
 
   render() {
@@ -46,7 +48,7 @@ export default class Login extends Component{
           style={styles.box}
           placeholder="Email"
           autoCapitalize="none"
-          textContentType="emailaddress"
+          textContentType="emailAddress"
           onChangeText={text=> this.setState({email: text})}
         />
         <TextInput style={styles.box}
@@ -55,10 +57,13 @@ export default class Login extends Component{
           secureTextEntry={true}
           onChangeText={text=> this.setState({password: text})}
         />
-        <TouchableOpacity style={styles.row}>
+        <TouchableOpacity style={styles.row} onPress={this.onLogin}>
           <View>
-            {this.state.loading
-            ? <ActivityIndicator /> : <Text>Log In</Text>}
+            {
+              this.state.loading
+                ? <ActivityIndicator />
+                : <Text>Log In</Text>
+            }
           </View>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -70,17 +75,21 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
     flex: 1,
-    fontWeight: 'bold'
-    },
+    fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   text: {
     fontSize: 20,
   },
   box:{
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40,
     borderColor: 'black',
-    borderWidth: 1
+    borderWidth: 1,
+    width: 200,
+    margin: 10,
+    padding: 10
   },
   login: {
     flex: 1,
