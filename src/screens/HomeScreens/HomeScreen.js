@@ -1,42 +1,52 @@
 import React, { Component } from 'react'
-import { View, TextInput,Text,StyleSheet,TouchableOpacity,StatusBar,ActivityIndicator} from 'react-native'
+import { View, TextInput, Text, StyleSheet, TouchableOpacity, StatusBar, ActivityIndicator} from 'react-native'
 import axios from 'axios'
 class HomeScreen extends Component {
-  
   state = {
     email :"",
     password :"",
     loading:false
   }
-  SaveData = () => {
+
+  handleLogin = () => {
     const{email ,password}= this.state
     if(!email.includes('@' ))
     {
-     alert('Email must be have @ ' )
+      alert('Email must be have @ ' )
+      return
     }
+
     if(!email.includes('.'))
     {
-     alert('Email must be have . ' )
+      alert('Email must be have . ' )
+      return
     }
+
    if(password.length < 6){
      alert('Password must be more then 6 charater')
-   }  
+   }
+
    this.setState({loading:true})
+
    const uriOscarhq ="http://demo.oscarhq-test.com/api/v1/auth/sign_in"
-   const dataOscarhq ={email,password}
-   axios.post(uriOscarhq,dataOscarhq)
-  .then(response => {
-    alert('login success');
-    this.setState({loading:false})
-  })
-  .catch(error =>{
-    alert(' login error')
-    this.setState({loading:false})
-  });
-  return
+   const params ={ email, password }
+
+   axios.post(uriOscarhq, params)
+
+    .then(response => {
+      alert('login success');
+      this.setState({ loading:false })
+    })
+    .catch(error =>{
+      alert('login error')
+      this.setState({ loading:false })
+    });
   }
 
-  
+  onInputChange = (field, text) => {
+    this.setState({ [field]: text })
+  }
+
   render() {
     return (
        <View style = {styles.container}>
@@ -48,7 +58,7 @@ class HomeScreen extends Component {
             placeholder = "Email"
             textContentType="emailAddress"
             autoCapitalize="none"
-            onChangeText={text => this.setState({ email: text})}
+            onChangeText={text => this.onInputChange('email', text)}
             />
 
           <TextInput 
@@ -56,14 +66,14 @@ class HomeScreen extends Component {
              placeholder = "Password" 
              secureTextEntry={true}
              autoCapitalize="none"
-             onChangeText={text => this.setState({ password: text})}
-
+             onChangeText={text => this.onInputChange('password', text)}
           />
-          <TouchableOpacity onPress={this.SaveData}>
+          <TouchableOpacity onPress={this.handleLogin}>
             <View style={styles.controll_button}>
-            
-            {this.state.loading?<ActivityIndicator size="large" color="red"/> : <Text style={styles.text_button}>Login</Text>}
-              
+              {
+                this.state.loading
+                  ? <ActivityIndicator size="large" color="red"/>
+                  : <Text style={styles.text_button}>Login</Text>}
             </View>
           </TouchableOpacity>
        </View>
@@ -107,5 +117,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     fontSize: 17
   },
- })
+})
+
 export default HomeScreen;
