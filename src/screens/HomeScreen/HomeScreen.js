@@ -3,78 +3,57 @@ import axios from 'axios'
 import {
   View,
   Text,
-  StatusBar,
-  TextInput,
-  ActivityIndicator,
+  StyleSheet,
   TouchableOpacity,
-  KeyboardAvoidingView
 } from 'react-native'
-
-import styles from './HomeScreen.styles'
 
 export default class HomeScreen extends Component {
   state = {
-    email: "",
-    password: "",
-    loading: false
+    count: 0
   }
 
-  onLogin = () => {
-    const { email, password } = this.state
-
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters")
-      return
-    }
-
-    this.setState({ loading: true })
-
-    const endpoint = 'http://demo.oscarhq-test.com/api/v1/auth/sign_in'
-    const credentail = { email, password }
-
-    axios.post(endpoint, credentail)
-    .then(response => {
-      alert('Success')
-      this.setState({ loading: false })
-    })
-    .catch(error => {
-      alert("Invalid credentail");
-      this.setState({ loading: false }) 
-    })
+  onIncreasement = () => {
+    const { count } = this.state
+    this.setState({ count: count + 1 })
   }
 
   render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <StatusBar barStyle="light-content"/>
-
+      <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>OSCaR</Text>
+          <Text style={styles.text}>Count = { this.state.count }</Text>
         </View>
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          onChangeText={ text => this.setState({ email: text }) }
-        />
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          onChangeText={ text => this.setState({ password: text }) }
-        />
-        <TouchableOpacity onPress={this.onLogin}>
-          <View style={styles.loginButton}>
-            {
-              this.state.loading
-                ? <ActivityIndicator />
-                : <Text style={styles.loginText}>Login</Text>
-            }
+        <TouchableOpacity onPress={this.onIncreasement}>
+          <View style={styles.button}>
+           <Text style={styles.buttonText}>+</Text>
           </View>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+  },
+  text: {
+    fontSize: 40,
+    fontWeight: 'bold',
+  },
+  button: {
+    width: 100,
+    padding: 15,
+    borderRadius: 5,
+    margin: 15,
+    alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#fff'
+  }
+})
