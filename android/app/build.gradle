@@ -103,6 +103,7 @@ android {
 
     defaultConfig {
         applicationId "com.devbootstrap"
+        multiDexEnabled true
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

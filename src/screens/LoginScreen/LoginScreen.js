@@ -13,6 +13,7 @@ import {
 
 import styles from './LoginScreen.styles'
 import { login } from '../../redux/actions/authentication'
+import { music } from '../../redux/actions/music'
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -22,6 +23,10 @@ class LoginScreen extends Component {
   state = {
     email: "",
     password: ""
+  }
+
+  componentDidMount(){
+    this.props.fetchMusic()
   }
 
   onLogin = () => {
@@ -36,43 +41,58 @@ class LoginScreen extends Component {
   }
 
   render() {
+    //console.log(this.props)
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <StatusBar barStyle="light-content"/>
-
-        <View style={styles.header}>
-          <Text style={styles.headerText}>OSCaR</Text>
-        </View>
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          onChangeText={ text => this.setState({ email: text }) }
-        />
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          onChangeText={ text => this.setState({ password: text }) }
-        />
-        <TouchableOpacity onPress={this.onLogin}>
-          <View style={styles.loginButton}>
-            {
-              this.props.loading
-                ? <ActivityIndicator />
-                : <Text style={styles.loginText}>Login</Text>
-            }
+      //<KeyboardAvoidingView style={styles.container} behavior="padding">
+      //<StatusBar barStyle="light-content"/>
+    
+      <View>
+        {
+          this.props.musics.map((music,index) => (
+          <View  key={index}>
+            
+            <Text >
+              {music.title}
+            </Text>
           </View>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+          ))
+        }
+
+      </View>
+    //  style={styles.header}
+    //  style={styles.headerText}
+    
+      //   // {/* <TextInput
+      //     placeholder="Email"
+      //     style={styles.input}
+      //     autoCapitalize="none"
+      //     textContentType="emailAddress"
+      //     onChangeText={ text => this.setState({ email: text }) }
+      //   />
+      //   <TextInput
+      //     placeholder="Password"
+      //     style={styles.input}
+      //     autoCapitalize="none"
+      //     secureTextEntry={true}
+      //     onChangeText={ text => this.setState({ password: text }) }
+      //   />
+      //   <TouchableOpacity onPress={this.onLogin}>
+      //     <View style={styles.loginButton}>
+      //       {
+      //         this.props.loading
+      //           ? <ActivityIndicator />
+      //           : <Text style={styles.loginText}>Login</Text>
+      //       }
+      //     </View>
+      //   </TouchableOpacity> */}
+      // </KeyboardAvoidingView>
     )
   }
 }
 
 const mapState = state => ({
-  loading: state.auth.loading
+  loading: state.auth.loading,
+  musics:state.music.data
 })
 
 // const mapDispatch = dispatch => ({
@@ -81,7 +101,8 @@ const mapState = state => ({
 // })
 
 const mapDispatch = {
-  signIn: login
+  signIn: login,
+  fetchMusic: music
 }
 
 export default connect(mapState, mapDispatch)(LoginScreen)
