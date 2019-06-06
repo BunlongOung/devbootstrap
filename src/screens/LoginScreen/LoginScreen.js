@@ -13,6 +13,7 @@ import {
 
 import styles from './LoginScreen.styles'
 import { login } from '../../redux/actions/authentication'
+import { musicData } from '../../redux/actions/music'
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -24,6 +25,10 @@ class LoginScreen extends Component {
     password: ""
   }
 
+  componentDidMount(){
+    this.props.fetchMusicData()
+  }
+
   onLogin = () => {
     const { email, password } = this.state
 
@@ -31,48 +36,32 @@ class LoginScreen extends Component {
       alert("Password must be at least 6 characters")
       return
     }
-
     this.props.signIn({ email, password })
   }
 
   render() {
+    console.log(this.props.musics)
     return (
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        <StatusBar barStyle="light-content"/>
-
-        <View style={styles.header}>
-          <Text style={styles.headerText}>OSCaR</Text>
-        </View>
-        <TextInput
-          placeholder="Email"
-          style={styles.input}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          onChangeText={ text => this.setState({ email: text }) }
-        />
-        <TextInput
-          placeholder="Password"
-          style={styles.input}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          onChangeText={ text => this.setState({ password: text }) }
-        />
-        <TouchableOpacity onPress={this.onLogin}>
-          <View style={styles.loginButton}>
-            {
-              this.props.loading
-                ? <ActivityIndicator />
-                : <Text style={styles.loginText}>Login</Text>
-            }
-          </View>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
+      // <KeyboardAvoidingView style={styles.container} behavior="padding">
+      //   <StatusBar barStyle="light-content"/>
+      <View>
+        {
+          this.props.musics.map((music, index) => (
+            <View style={styles.header} key={index}>
+              <Text style={styles.headerText}>{ `${index + 1}. ${music.title}` }</Text>
+              <Text>{ music.artist }</Text>
+            </View>
+          ))
+        }
+      </View>
+      // </KeyboardAvoidingView>
     )
   }
 }
 
 const mapState = state => ({
-  loading: state.auth.loading
+  loading: state.auth.loading,
+  musics: state.music.data
 })
 
 // const mapDispatch = dispatch => ({
@@ -81,7 +70,8 @@ const mapState = state => ({
 // })
 
 const mapDispatch = {
-  signIn: login
+  signIn: login,
+  fetchMusicData: musicData
 }
 
 export default connect(mapState, mapDispatch)(LoginScreen)
