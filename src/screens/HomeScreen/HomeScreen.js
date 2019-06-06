@@ -1,39 +1,17 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
-export default class HomeScreen extends Component {
-  static navigationOptions = {
-    headerStyle: {
-      backgroundColor: '#000'
+class HomeScreen extends Component {
+  static navigationOptions() {
+    return {
+      header: null
     }
-  };
-
-  state = {
-    count: 0
-  }
-
-  onIncreasement = () => {
-    const { count } = this.state
-    this.setState({ count: count + 1 })
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.text}>Count = { this.state.count }</Text>
-        </View>
-        <TouchableOpacity onPress={this.onIncreasement}>
-          <View style={styles.button}>
-           <Text style={styles.buttonText}>+</Text>
-          </View>
-        </TouchableOpacity>
+        <Text style={styles.welcome}>Welcome to React Native</Text>
       </View>
     )
   }
@@ -43,23 +21,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
+    justifyContent: 'center'
   },
-  text: {
-    fontSize: 40,
-    fontWeight: 'bold',
-  },
-  button: {
-    width: 100,
-    padding: 15,
-    borderRadius: 5,
-    margin: 15,
-    alignItems: 'center',
-    backgroundColor: '#000',
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff'
+  welcome: {
+    fontSize: 20
   }
 })
+
+export default HomeScreen

@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
-import authentication from './authentication'
-import music from './music'
+import sample from './sample'
 
 export default combineReducers({
-  auth: authentication,
-  music
+  sample
 })
