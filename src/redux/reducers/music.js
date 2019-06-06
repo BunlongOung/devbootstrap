@@ -7,13 +7,13 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case 'LOGIN_REQUEST':
+    case 'FETCH_MUSIC_REQUEST':
       return { ...state, loading: true }
 
-    case 'LOGIN_SUCCESS':
+    case 'FETCH_MUSIC_SUCCESS':
       return { ...state, loading: false, success: true, error: false, data: action.data }
 
-    case 'LOGIN_FAIL':
+    case 'FETCH_MUSIC_FAIL':
       return { ...state, loading: false, error: true, success: false }
 
     default:
