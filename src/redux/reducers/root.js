@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
-import sample from './sample'
+import SplashScreen from './SplashScreen'
 
 export default combineReducers({
-  sample
+  recipes: SplashScreen
+  
 })
