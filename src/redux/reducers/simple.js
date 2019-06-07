@@ -1,4 +1,5 @@
 const initailState = {
+  //data={},
   loading: false,
   success: false,
   error: false

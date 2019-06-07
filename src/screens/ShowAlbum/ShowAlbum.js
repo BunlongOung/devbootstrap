@@ -38,7 +38,7 @@ class HomeScreen extends Component {
             style={{
               textAlign:'center',
               padding:'30',
-              color:'white',
+              color:'black',
               fontSize:25
             }}>Show Album</Text>
           </View>

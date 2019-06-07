@@ -5,9 +5,13 @@ import { createStackNavigator, createAppContainer } from "react-navigation"
 import createStore from './src/redux/store'
 
 import HomeScreen from './src/screens/HomeScreen/HomeScreen'
-
+import ShowAlbum from './src/screens/ShowAlbum/ShowAlbum'
 const AppNavigator = createStackNavigator({
-  Home: { screen: HomeScreen },
+  Home: { screen: HomeScreen
+  },
+  ShowAlbum: { screen: ShowAlbum
+  }
+
 })
 
 const Navigation = createAppContainer(AppNavigator)
