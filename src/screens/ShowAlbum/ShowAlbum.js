@@ -1,53 +1,77 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar } from 'react-native'
-
-class HomeScreen extends Component {
+import { connect } from 'react-redux'
+import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar, WebView, ScrollView, Linking } from 'react-native'
+import { musicAlbum } from '../../redux/actions/Album'
+class ShowAlbum extends Component {
   static navigationOptions() {
     return {
-      header: null
+      headerStyle: {
+        backgroundColor: 'black'
+      }
     }
   }
-  
+  componentDidMount = () => {
+    this.props.album();
+  }
   render() {
+    console.log(this.props)
     return (
 
-      <View >
-        <StatusBar barStyle="light-content"/>
-        <View >
-        <Image 
-          source={{uri: 'https://images-na.ssl-images-amazon.com/images/I/41j7-7yboXL.jpg'}}
-          style={{
-            width:400, 
-            height:700,
-          }} 
-        />
+      <ScrollView>
+        <View style={styles.contrainer}>
+          <Text style={styles.title}>Taylor Swift Songs</Text>
+          {
+            this.props.albums.map((album, index) => (
+              <View style={styles.header} key={index}>
+                <TouchableOpacity onPress={() => Linking.openURL(album.url)}>
+                  <Image
+                    style={styles.image}
+                    source={{ url: `${album.image}` }}
+                  />
+                  <Text style={styles.headerText}> {album.title} </Text>
+                </TouchableOpacity>
+              </View>
+
+            ))
+          }
         </View>
-        <TouchableOpacity
-          style={{
-            width: 200,
-            padding: 15,
-            borderRadius: 5,
-            margin: 15,
-            alignItems: 'center',
-            backgroundColor: '#800000',
-            marginLeft:80,
-            marginTop: 20
-          }}>
-          <View >
-            <Text
-            style={{
-              textAlign:'center',
-              padding:'30',
-              color:'black',
-              fontSize:25
-            }}>Show Album</Text>
-          </View>
-        </TouchableOpacity>
-    </View>
+      </ScrollView>
+
     )
   }
 }
- 
+const mapState = state => ({
+  albums: state.album.data
+})
+const mapDispatch = {
+  album: musicAlbum
+}
+const styles = StyleSheet.create({
+  contrainer: {
+    paddingBottom: 10
 
+  }, headerText: {
+    color: '#800000',
+    textAlign: 'center',
+    fontSize: 20
 
-export default HomeScreen
+  }, header: {
+    marginTop: 5,
+
+  }, image: {
+    marginTop: 5,
+    width: 300,
+    height: 230,
+    marginLeft: 35,
+    borderRadius: 5,
+
+  }, title: {
+    padding:10,
+    textAlign: 'center',
+    color: '#0059b3',
+    fontSize: 30,
+    fontWeight:'bold'
+  }
+
+})
+export default connect(mapState, mapDispatch)(ShowAlbum)

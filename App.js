@@ -7,11 +7,12 @@ import createStore from './src/redux/store'
 import HomeScreen from './src/screens/HomeScreen/HomeScreen'
 import ShowAlbum from './src/screens/ShowAlbum/ShowAlbum'
 const AppNavigator = createStackNavigator({
-  Home: { screen: HomeScreen
+  Home: {
+    screen: HomeScreen
   },
-  ShowAlbum: { screen: ShowAlbum
+  ShowAlbum: {
+    screen: ShowAlbum
   }
-
 })
 
 const Navigation = createAppContainer(AppNavigator)
@@ -21,7 +22,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <StatusBar barStyle='dark-content'/>
+        <StatusBar barStyle='dark-content' />
         <Navigation />
       </Provider>
     );
