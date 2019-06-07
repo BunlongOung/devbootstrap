@@ -4,10 +4,20 @@ import { Provider } from 'react-redux'
 import { createStackNavigator, createAppContainer } from "react-navigation"
 import createStore from './src/redux/store'
 
+import ScreenLoading from './src/screens/ScreenLoading/ScreenLoading'
 import HomeScreen from './src/screens/HomeScreen/HomeScreen'
+import DetailScreen from './src/screens/DetailScreen/DetailScreen'
 
 const AppNavigator = createStackNavigator({
-  Home: { screen: HomeScreen },
+  Loading: {
+    screen: ScreenLoading  
+  },
+  Home: { 
+    screen: HomeScreen 
+  },
+  Detail: {
+    screen: DetailScreen
+  },
 })
 
 const Navigation = createAppContainer(AppNavigator)
